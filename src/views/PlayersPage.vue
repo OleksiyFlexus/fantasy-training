@@ -1,35 +1,108 @@
 <template>
-    <div class="pageContent">
-        <TopControlPanel>
-            <template #pageName>Players</template>
-            <SearchButton />
-            <CreatePlayerBtn />
-        </TopControlPanel>
-        <Sections>
-            Players
-        </Sections>
-        <DataEmpty v-if="players.length === 0">
-            No players created!
-        </DataEmpty>
-        <Player v-else :players="players" />
-    </div>
+  <div class="playersPageContainer">
+    <TopControlPanel>
+      <template #left>
+        <BackBtn />
+      </template>
+      <template #pageName>
+        <p>Players</p>
+      </template>
+      <template #right>
+        <CreateItemBtn @click="openModal" />
+        <SearchBtn />
+      </template>
+    </TopControlPanel>
+    <TheSections> Players </TheSections>
+    <ThePlayer v-for="player in players" :key="player.id" :player="player" />
+    <EmptyData v-if="players.length === 0"> No players found </EmptyData>
+    <Modal :isActive="isModalActive" @click.self="closeAndReset">
+      <ModalHeader @close="closeModal"> Create your player </ModalHeader>
+      <ModalBody>
+        <CreateItemForm>
+          <ItemFormImgSection v-model:photoFile="photoFile" />
+          <ItemFormNameSection :formData="playerForm" :fields="playerFields" />
+          <ItemFormInputSection :fields="playerFields" :formData="playerForm" />
+          <ItemFormDropdownSection v-model:selectedTeam="selectedTeam" :teams="teams" />
+        </CreateItemForm>
+      </ModalBody>
+      <ModalFooter>
+        <SaveBtn @click="savePlayer" />
+      </ModalFooter>
+    </Modal>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { db } from '@/firebase';
-import { onValue, ref as dbRef } from 'firebase/database';
+import { useModal } from "@/helpers/useModal";
+import { savePlayerInDB, fetchPlayers } from "@/api/player";
+import { uploadImage } from "@/api/uploadImage";
 
-const players = ref([]);
+const { isModalActive, openModal, closeModal } = useModal();
+const players = fetchPlayers();
+const photoFile = ref<File | null>(null);
 
-onMounted(() => {
-    const playersRef = dbRef(db, 'players');
-    onValue(playersRef, (snapshot) => {
-        const data = snapshot.val();
-        players.value = data
-            ? Object.entries(data).map(([id, player]) => ({ id, ...player }))
-            : [];
-    });
+const playerFields = [
+  { name: "name", label: "Name", placeholder: "Enter name", type: "text" },
+  {
+    name: "surname",
+    label: "Surname",
+    placeholder: "Enter surname",
+    type: "text",
+  },
+];
+
+const playerForm = ref({
+  name: "",
+  surname: "",
+  team: "",
+  photo: "",
+  games: 0,
+  goals: 0,
+  assists: 0,
 });
+
+const teams = ref(["Team 1", "Team 2", "Team 3"]);
+const selectedTeam = ref("");
+
+const savePlayer = async () => {
+  if (!playerForm.value.name.trim() || !playerForm.value.surname.trim()) {
+    console.warn("Форма неполная");
+    return;
+  }
+  try {
+    let photoURL = "";
+    if (photoFile.value) {
+      photoURL = await uploadImage(photoFile.value);
+    }
+    await savePlayerInDB({
+      ...playerForm.value,
+      photo: photoURL,
+      team: selectedTeam.value,
+    });
+
+    console.log("Player saved");
+    closeAndReset();
+  } catch (error) {
+    console.error("Ошибка при сохранении игрока:", error);
+  }
+};
+
+const closeAndReset = () => {
+  isModalActive.value = false;
+  playerForm.value = { name: "", surname: "" };
+  selectedTeam.value = "";
+  photoFile.value = null;
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+.playersPageContainer {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+</style>

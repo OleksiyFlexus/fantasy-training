@@ -1,63 +1,30 @@
 <template>
-    <div class="pageContent">
-        <TopControlPanel>
-            <template #pageName>Statistic</template>
-        </TopControlPanel>
-        <Sections>
-            Statistic
-        </Sections>
-        <ControlPanel>
-            <button class="controlButton" :class="{ 'button-active': activeTab === 'teams-points-table' }"
-                @click="changeTab('teams-points-table')">
-                Teams statistic
-            </button>
-            <button class="controlButton" :class="{ 'button-active': activeTab === 'players-score-table' }"
-                @click="changeTab('players-score-table')">
-                Players statistic
-            </button>
-        </ControlPanel>
-        <div class="contentSection">
-            <TeamsPointsTable v-if="activeTab === 'teams-points-table'" />
-            <PlayersScoreTable v-if="activeTab === 'players-score-table'" />
-        </div>
-    </div>
+  <div class="statisticPageContainer">
+    <TabPanel>
+      <SwapSectionBtn @changeTab="changeTab" title="Teams statistic" :activeTab="activeTab" />
+      <SwapSectionBtn @changeTab="changeTab" title="Players statistic" :activeTab="activeTab" />
+    </TabPanel>
+    <PlayersScoreTable v-if="activeTab === 'Players statistic'" />
+    <TeamsPointsTable v-if="activeTab === 'Teams statistic'" />
+  </div>
 </template>
 
 <script setup lang="ts">
-
-const activeTab = ref('teams-points-table');
+const activeTab = ref("Teams statistic");
 
 const changeTab = (tab: string) => {
-    activeTab.value = tab;
+  activeTab.value = tab;
 };
 </script>
 
 <style scoped>
-.controlButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 40px;
-    border-radius: 80px;
-    color: #ffffff;
-    background-color: #161616;
-    border: 1px solid #2D2D2D;
-    font-weight: bold;
-}
-
-.button-active {
-    background-color: #FFFFFF;
-    border: 1px solid #C8F558;
-    color: #000000;
-    font-weight: bold;
-}
-
-.contentSection {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.statisticPageContainer {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 </style>

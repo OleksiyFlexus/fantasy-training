@@ -1,14 +1,16 @@
 <template>
-  <div class="body_gradient"></div>
+  <div class="bodyGradient"></div>
   <div class="layoutContent">
     <router-view />
     <div class="footer">
-      <Menu />
+      <TheMenu />
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import TheMenu from "../components/menu/TheMenu.vue";
+</script>
 
 <style scoped>
 .layoutContent {

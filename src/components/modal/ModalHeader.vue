@@ -1,7 +1,7 @@
 <template>
   <div class="modalHeader">
     <slot />
-    <CloseButton @click="emit('close')" />
+    <CloseBtn @click="emit('close')" />
   </div>
 </template>
 

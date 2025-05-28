@@ -1,21 +1,24 @@
-
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-  // { path: "/:pathMatch(.*)*", component: () => import("@/pages/NotFound404.vue"), },
-
-  { path: "/", component: () => import("@/views/HomePage.vue") },
-  { path: "/loading", component: () => import("@/views/LoadingPage.vue") },
-  { path: "/main", component: () => import("@/layouts/MainPageLayout.vue"), 
-      children: [
-        { path: "/match", component: () => import("@/views/MatchPage.vue"), },
-        { path: "/players", component: () => import("@/views/PlayersPage.vue"), },
-        { path: "/teams", component: () => import("@/views/TeamsPage.vue"), },
-        { path: "/statistic", component: () => import("@/views/StatisticPage.vue"), },
-      ],
+  {
+    path: "/",
+    component: () => import("@/layouts/MainPageLayout.vue"),
+    children: [
+      {
+        path: "/match",
+        name: "match",
+        component: () => import("@/views/MatchPage.vue"),
+        props: true,
+      },
+      { path: "/players", component: () => import("@/views/PlayersPage.vue") },
+      { path: "/teams", component: () => import("@/views/TeamsPage.vue") },
+      { path: "/statistic", component: () => import("@/views/StatisticPage.vue") },
+    ],
   },
-  { path: "/match-history", component: () => import("@/views/MatchesHistoryPage.vue") },
+  { path: "/all-matches", component: () => import("@/views/AllMatchesPage.vue") },
 
+  { path: "/:pathMatch(.*)*", component: () => import("@/views/NotFound404.vue") },
 ];
 
 const router = createRouter({

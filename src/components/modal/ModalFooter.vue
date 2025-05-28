@@ -8,10 +8,9 @@
 
 <style scoped>
 .modalFooter {
-    width: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 </style>

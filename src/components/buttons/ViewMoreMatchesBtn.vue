@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <button class="viewMoreBtn" @click="() => { router.push('/match-history') }">View All</button>
-    </div>
+   <button class="viewMoreBtn" @click="() => { router.push('/all-matches') }">View All</button>
 </template>
 
 <script setup lang="ts">

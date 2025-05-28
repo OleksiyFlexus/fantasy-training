@@ -10,12 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  MatchIcon,
-  PlayerIcon,
-  TeamIcon,
-  StatisticIcon,
-} from "@/constants/importIcons";
+import { MatchIcon, PlayerIcon, TeamIcon, StatisticIcon } from "@/constants/importIcons";
 
 const menuItems = [
   { name: "Match", icon: MatchIcon, path: "/match" },
