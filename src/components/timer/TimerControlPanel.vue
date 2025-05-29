@@ -1,8 +1,8 @@
 <template>
   <div class="timerControlPanel">
-    <TimerStartBtn />
-    <TimerPauseBtn />
-    <TimerStopBtn />
+    <TimerStartBtn @click="$emit('start')" />
+    <TimerPauseBtn @click="$emit('pause')" />
+    <TimerStopBtn @click="$emit('stop')" />
   </div>
 </template>
 

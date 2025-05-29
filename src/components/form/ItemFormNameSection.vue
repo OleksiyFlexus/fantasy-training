@@ -11,7 +11,8 @@ const props = defineProps<{
 }>();
 
 const displayText = computed(() => {
-  return props.fields.map((field) => props.formData[field.name]).join(" ");
+  if (!props.fields || !Array.isArray(props.fields)) return "";
+  return props.fields.map((field) => props.formData[field.name] || "").join(" ");
 });
 </script>
 

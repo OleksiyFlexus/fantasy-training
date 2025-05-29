@@ -1,12 +1,23 @@
 <template>
   <div class="eventTeamNameSection">
-    <h1>Home</h1>
+    <h1>{{ homeTeamName }}</h1>
     <p>VS</p>
-    <h1>Away</h1>
+    <h1>{{ awayTeamName }}</h1>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  homeTeamName: {
+    type: String,
+    default: "Home",
+  },
+  awayTeamName: {
+    type: String,
+    default: "Away",
+  },
+});
+</script>
 
 <style scoped>
 .eventTeamNameSection {

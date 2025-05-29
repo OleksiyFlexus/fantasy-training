@@ -1,11 +1,19 @@
 <template>
   <div class="player-logo">
-    <img :src="DefaultPlayerLogo" alt="DefaultPlayerLogo" />
+    <img v-if="playerPhoto" :src="playerPhoto" alt="DefaultPlayerLogo" />
+    <img v-else :src="DefaultPlayerLogo" alt="DefaultPlayerLogo" />
   </div>
 </template>
 
 <script setup lang="ts">
 import DefaultPlayerLogo from "@/assets/images/DefaultPlayerLogo.png";
+
+const props = defineProps({
+  playerPhoto: {
+    type: String,
+    default: DefaultPlayerLogo,
+  },
+});
 </script>
 
 <style scoped>

@@ -1,18 +1,22 @@
 <template>
-  <div class="eventTeamContainer">
-    <img :src="DefaultTeamLogo" alt="DefaultTeamLogo" />
+  <div class="eventTeamContainer" @click="emit('openModal')">
+    <img :src="teamLogo ?? DefaultTeamLogo" alt="DefaultTeamLogo" />
     <h1>{{ title }}</h1>
   </div>
 </template>
 
 <script setup lang="ts">
-import DefaultTeamLogo from "@/assets/images/DefaultTeamLogo.png";
+const emit = defineEmits(["openModal"]);
 
+import DefaultTeamLogo from "@/assets/images/DefaultTeamLogo.png";
 const props = defineProps({
   title: {
     type: String,
-    home: "Home",
-    away: "Away",
+    required: true,
+  },
+  teamLogo: {
+    type: String,
+    default: DefaultTeamLogo,
   },
 });
 </script>

@@ -1,10 +1,17 @@
 <template>
   <div class="timerContainer">
-    <TimerCiferblat />
+    {{ time }}
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps({
+  time: {
+    type: String,
+    default: "07:00",
+  },
+});
+</script>
 
 <style scoped>
 .timerContainer {
@@ -17,5 +24,6 @@
   padding: 8px 4px;
   border-radius: 40px;
   font-weight: bold;
+  color: #ffffff;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="overlay" @click="closeRadialMenu">
     <div class="radialMenu" @click.stop>
-      <RadialMenuCenterItem />
+      <RadialMenuCenterItem :playerPhoto="selectedPlayer?.photo" />
       <div v-for="option in menuItems" :key="option.id">
         <RadialMenuBtn :style="getRadialStyle(option)" @click="option.onClick">
           <component :is="option.icon" />
@@ -29,6 +29,7 @@ import { getRadialStyle } from "@/helpers/getRadialMenuStyle";
 const props = defineProps<{
   position: Position;
   team: string;
+  selectedPlayer?: any;
 }>();
 
 const title = ref("");
@@ -56,7 +57,6 @@ const handleSubstitution = () => {
 
 const handlePlayerSelected = (player: any) => {
   if (props.position && props.team && player) {
-    console.log(`Adding player ${player.name} to ${props.team} team at position ${props.position}`);
     if (actionMode.value === "add") {
       addPlayerToPosition(player, props.position, props.team);
     } else if (actionMode.value === "substitute") {

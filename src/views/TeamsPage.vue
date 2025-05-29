@@ -18,11 +18,7 @@
     <Modal :isActive="isModalActive" @close="closeAndReset">
       <ModalHeader @close="closeAndReset"> Create your team </ModalHeader>
       <ModalBody>
-        <CreateItemForm>
-          <ItemFormImgSection v-model:photoFile="photoFile" />
-          <ItemFormNameSection :formData="teamForm" :fields="teamFields" />
-          <ItemFormInputSection :fields="teamFields" :formData="teamForm" />
-        </CreateItemForm>
+        <CreateItemForm :form="teamForm" :fields="teamFields" v-model:photoFile="photoFile" :showTeamSelect="false" />
       </ModalBody>
       <ModalFooter>
         <SaveBtn @click="saveTeam" :disabled="!teamForm.name" />
@@ -69,6 +65,10 @@ const closeAndReset = () => {
   teamForm.value = {
     name: "",
     logo: "",
+    players: [],
+    games: 0,
+    wins: 0,
+    goals: 0,
   };
   photoFile.value = null;
   refreshTeams();

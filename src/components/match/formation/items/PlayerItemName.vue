@@ -14,7 +14,6 @@ const props = defineProps<{
 .lineUpPlayerName {
   display: block;
   background-color: #02020271;
-  width: 100px;
   max-width: 100px;
   padding: 3px;
   border-radius: 7px;

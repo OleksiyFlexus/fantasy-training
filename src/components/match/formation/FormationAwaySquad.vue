@@ -12,7 +12,8 @@
     @playerSelected="playerSelected"
     @removePlayer="handleRemovePlayer"
     :position="currentPosition"
-    :team="currentTeam">
+    :team="currentTeam"
+    :selectedPlayer="selectedPlayer">
   </RadialPlayerMenu>
 </template>
 
@@ -43,6 +44,7 @@ const openRadialMenu = (position: Position, team: string) => {
   currentPosition.value = position.class;
   currentTeam.value = team;
   showRadialMenu.value = true;
+  selectedPlayer.value = null;
 };
 
 const handleRemovePlayer = () => {
@@ -51,8 +53,11 @@ const handleRemovePlayer = () => {
 
 const playerSelected = (player: any) => {
   console.log("Player selected:", player, "for position:", currentPosition.value, "team:", currentTeam.value);
+  selectedPlayer.value = player;
   showRadialMenu.value = false;
 };
+
+const selectedPlayer = ref(null);
 </script>
 
 <style scoped>

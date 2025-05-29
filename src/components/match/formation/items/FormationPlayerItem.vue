@@ -6,12 +6,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue';
 import { homePlayersByPosition, awayPlayersByPosition } from "@/stores/playerStore";
 
 const props = defineProps<{
   player?: Object;
-  position?: any; // Changed from string to any to match the Position type
+  position?: any; 
   team?: string;
 }>();
 
